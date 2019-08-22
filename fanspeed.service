@@ -1,0 +1,8 @@
+[Unit]
+Description=Start system fan at boot
+
+[Service]
+ExecStart=/path/to/file/fanspeed.sh 50
+
+[Install]
+WantedBy=multi-user.target

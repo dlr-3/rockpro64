@@ -9,7 +9,7 @@
 #!/bin/bash
 
 declare -i SPEED_INPUT
-declare -i FAN_SPEED
+declare -i PWM_VALUE
 SPEED_INPUT=$1
 
 if [ $SPEED_INPUT -lt 0 ]; then
@@ -20,5 +20,12 @@ if [ $SPEED_INPUT -gt 100 ]; then
     SPEED_INPUT=100
 fi
 
-let "FAN_SPEED = (255*$SPEED_INPUT)/100"
-sudo echo $FAN_SPEED > /sys/class/hwmon/hwmon0/pwm1
+let "PWM_VAULE = (255*$SPEED_INPUT)/100"
+
+# optionally hardcode your /sys/class/hwmon/hwmon*/pwm* path here. This is different among operating systems
+# Comment out the echo "$PWM_VALUE > `find ...`" line if you use this option.
+# echo $PWM_VALUE > /sys/class/hwmon/hwmon0/pwm1
+
+# Use linux builtin "find" to dynamically detect the pwm file beneath /sys/devices/platform/pwm-fan
+# Tested on armbian/ubuntu 18, you may want to opt for the hardcode option above if this isnt working.
+echo $FAN_SPEED > `find /sys/devices/platform/pwm-fan -type f -name pwm*`

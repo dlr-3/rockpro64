@@ -1,6 +1,5 @@
 # rockpro64
-pine rockpro64 SBC stuff and things
-
+pine rockpro64 fan control script and systemd configuration
 fanspeed script:
 
 make sure the script fanspeed.sh is executable. run it with sudo like so:
